@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
 from dateutil.relativedelta import relativedelta
 
 
@@ -86,6 +88,12 @@ class GeracadCarteiraTreinamento(models.Model):
     def _compute_student_count(self):
         for rec in self:
             rec.student_count = len(rec.student_ids)
+
+    def unlink(self):
+        """Permite excluir treinamento apenas para o administrador."""
+        if not self.env.user.has_group('base.group_system'):
+            raise UserError(_('Apenas o administrador pode excluir treinamentos de Carteiras da Vale.'))
+        return super(GeracadCarteiraTreinamento, self).unlink()
 
     def action_print_carteiras(self):
         """Abre o relatório de carteiras em PDF para os alunos matriculados."""
