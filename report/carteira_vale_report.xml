@@ -28,4 +28,18 @@
         <field name="help">Gera as carteiras de vale em PDF para todos os alunos matriculados no treinamento.</field>
     </record>
 
+    <record id="action_report_carteira_entrega" model="ir.actions.report">
+        <field name="name">Lista de Entrega de Carteiras</field>
+        <field name="model">geracad.carteira.treinamento</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">geracad_carteiras_vale.report_carteira_entrega_template</field>
+        <field name="report_file">geracad_carteiras_vale.report_carteira_entrega_template</field>
+        <field name="attachment_use" eval="False"/>
+        <field name="print_report_name">'Entrega - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_geracad_carteira_treinamento"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_carteira_vale"/>
+        <field name="help">Lista de alunos com espaço para data da entrega e assinatura do recebedor.</field>
+    </record>
+
 </odoo>

@@ -17,11 +17,11 @@
         <field name="sequence">10</field>
     </record>
 
-    <!-- Submenu Alunos (lista de alunos do geracad_aluno / geracad_curso) -->
+    <!-- Submenu Alunos (tabela própria Carteira da Vale: nome + matrícula) -->
     <record model="ir.ui.menu" id="menu_geracad_carteira_aluno_app">
         <field name="name">Alunos</field>
         <field name="parent_id" ref="menu_geracad_carteiras_vale_app"/>
-        <field name="action" ref="geracad_aluno.geracad_aluno_action_window"/>
+        <field name="action" ref="action_geracad_carteira_aluno"/>
         <field name="sequence">20</field>
     </record>
 
@@ -42,11 +42,11 @@
         <field name="sequence">10</field>
     </record>
 
-    <!-- Submenu Alunos (lista de alunos do geracad_aluno / geracad_curso) -->
+    <!-- Submenu Alunos (tabela própria Carteira da Vale: nome + matrícula) -->
     <record model="ir.ui.menu" id="menu_geracad_carteira_aluno">
         <field name="name">Alunos</field>
         <field name="parent_id" ref="menu_geracad_carteiras_vale_root"/>
-        <field name="action" ref="geracad_aluno.geracad_aluno_action_window"/>
+        <field name="action" ref="action_geracad_carteira_aluno"/>
         <field name="sequence">20</field>
     </record>
 

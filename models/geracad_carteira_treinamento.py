@@ -17,17 +17,23 @@ class GeracadCarteiraTreinamento(models.Model):
         string='Descrição do Treinamento',
         help='Ex: Empregado que executa atividade de: Operador Plataforma Elevatória | PEMT | Grupo 3B - Tipo Lança Articulada Diesel ou Elétrica',
     )
-    training_date = fields.Date(
-        string='Data do Treinamento',
+    date_start = fields.Date(
+        string='Data Inicial',
         required=True,
+        help='Data de início do treinamento.',
+    )
+    date_end = fields.Date(
+        string='Data Final',
+        help='Opcional. Se vazio, o treinamento é de um único dia (data inicial).',
     )
     validity_date = fields.Date(
         string='Validade',
         compute='_compute_validity_date',
         store=True,
         readonly=False,
-        help='Preenchido automaticamente: 2 anos após a data do treinamento.',
+        help='Preenchido automaticamente: 2 anos após o fim do treinamento (data final ou, se vazia, data inicial).',
     )
+
     workload_hours = fields.Float(
         string='Carga Horária (horas)',
         default=8.0,
@@ -66,11 +72,13 @@ class GeracadCarteiraTreinamento(models.Model):
         store=True,
     )
 
-    @api.depends('training_date')
+    @api.depends('date_start', 'date_end')
     def _compute_validity_date(self):
         for rec in self:
-            if rec.training_date:
-                rec.validity_date = rec.training_date + relativedelta(years=2)
+            if rec.date_start:
+                # Fim do treinamento: data final se houver, senão data inicial (um dia)
+                end_date = rec.date_end or rec.date_start
+                rec.validity_date = end_date + relativedelta(years=2)
             else:
                 rec.validity_date = False
 
@@ -85,6 +93,11 @@ class GeracadCarteiraTreinamento(models.Model):
         if not self.student_ids:
             return
         return self.env.ref('geracad_carteiras_vale.action_report_carteira_vale').report_action(self)
+
+    def action_print_entrega(self):
+        """Abre o relatório de lista de entrega de carteiras (dados do treinamento + tabela de alunos)."""
+        self.ensure_one()
+        return self.env.ref('geracad_carteiras_vale.action_report_carteira_entrega').report_action(self)
 
     def get_signature_data_uri(self, field_name='instructor_signature'):
         """Retorna o campo Binary como data URI para uso em relatório (img src)."""

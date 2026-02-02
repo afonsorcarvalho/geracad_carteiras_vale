@@ -13,7 +13,7 @@ except ImportError:
 
 class GeracadCarteiraAluno(models.Model):
     _name = 'geracad.carteira.aluno'
-    _description = 'Aluno Matriculado no Treinamento (Carteira de Vale)'
+    _description = 'Aluno da Carteira da Vale (matriculado no treinamento)'
 
     training_id = fields.Many2one(
         'geracad.carteira.treinamento',
@@ -21,19 +21,14 @@ class GeracadCarteiraAluno(models.Model):
         required=True,
         ondelete='cascade',
     )
-    aluno_id = fields.Many2one(
-        'res.partner',
-        string='Aluno',
+    name = fields.Char(
+        string='Nome',
         required=True,
-        domain=[('e_aluno', '=', True)],
-        help='Selecione um aluno cadastrado no sistema',
+        help='Nome do aluno que aparecerá na carteira.',
     )
-    student_name = fields.Char(
-        string='Nome do Aluno (na Carteira)',
-        compute='_compute_student_name',
-        store=True,
-        readonly=False,
-        help='Nome que aparecerá na carteira (ex: Sr. Alex Tadeu de Souza Alexandrino). Pode ser editado.',
+    matricula = fields.Char(
+        string='Matrícula',
+        help='Número de matrícula do aluno.',
     )
     verification_code = fields.Char(
         string='Código de Verificação',
@@ -49,23 +44,6 @@ class GeracadCarteiraAluno(models.Model):
     def _generate_verification_code(self):
         """Gera um código único de verificação usando UUID."""
         return str(uuid.uuid4()).replace('-', '')[:32].upper()
-
-    @api.depends('aluno_id', 'aluno_id.name', 'aluno_id.sexo')
-    def _compute_student_name(self):
-        for rec in self:
-            if rec.aluno_id:
-                name = (rec.aluno_id.name or '').strip()
-                if name and not name.upper().startswith('SR') and not name.upper().startswith('SRA'):
-                    sexo = rec.aluno_id.sexo
-                    if sexo == 'M':
-                        name = 'Sr. ' + name
-                    elif sexo == 'F':
-                        name = 'Sra. ' + name
-                    else:
-                        name = 'Sr./Sra. ' + name
-                rec.student_name = name.upper() if name else ''
-            else:
-                rec.student_name = ''
 
     def get_verification_url(self):
         """Retorna a URL pública para verificação da carteira."""
@@ -97,17 +75,17 @@ class GeracadCarteiraAluno(models.Model):
             return ''
 
     def write(self, vals):
-        """Garante que o nome na carteira seja sempre salvo em maiúsculas."""
-        if 'student_name' in vals and vals['student_name']:
-            vals['student_name'] = vals['student_name'].strip().upper()
+        """Garante que o nome seja salvo em maiúsculas."""
+        if 'name' in vals and vals.get('name'):
+            vals['name'] = vals['name'].strip().upper()
         return super().write(vals)
 
     @api.model_create_multi
     def create(self, vals_list):
-        """Garante que o nome na carteira seja sempre salvo em maiúsculas e gera código de verificação."""
+        """Garante que o nome seja salvo em maiúsculas e gera código de verificação."""
         for vals in vals_list:
-            if vals.get('student_name'):
-                vals['student_name'] = vals['student_name'].strip().upper()
+            if vals.get('name'):
+                vals['name'] = vals['name'].strip().upper()
             if not vals.get('verification_code'):
                 vals['verification_code'] = self._generate_verification_code()
         return super().create(vals_list)

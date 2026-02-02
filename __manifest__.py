@@ -14,15 +14,14 @@
     'website': "http://www.netcom-ma.com.br",
 
     'category': 'Academico',
-    'version': '14.0.1.0',
+    'version': '14.0.1.1',
 
     'depends': [
         'base',
         'website',
-        'geracad_aluno',
         'geracad_curso',
     ],
-    
+
     'external_dependencies': {
         'python': ['qrcode', 'Pillow'],
     },
@@ -32,8 +31,11 @@
         'security/ir.model.access.csv',
         'report/carteira_vale_report.xml',
         'report/carteira_vale_template.xml',
+        'report/carteira_entrega_template.xml',
         'views/geracad_carteira_treinamento_views.xml',
         'views/menu_views.xml',
         'views/carteira_verification_templates.xml',
     ],
+
+    'post_init_hook': 'post_init_hook',
 }

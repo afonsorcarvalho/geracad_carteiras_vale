@@ -21,15 +21,19 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th width="40%">Aluno:</th>
-                                        <td><strong t-esc="carteira.student_name"/></td>
+                                        <td><strong t-esc="carteira.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Matrícula:</th>
+                                        <td><span t-esc="carteira.matricula or '-'"/></td>
                                     </tr>
                                     <tr>
                                         <th>Treinamento:</th>
                                         <td><span t-field="training.name"/></td>
                                     </tr>
                                     <tr>
-                                        <th>Data do Treinamento:</th>
-                                        <td><span t-field="training.training_date" t-options='{"widget": "date"}'/></td>
+                                        <th>Período do Treinamento:</th>
+                                        <td><span t-field="training.date_start" t-options='{"widget": "date"}'/><t t-if="training.date_end"> a <span t-field="training.date_end" t-options='{"widget": "date"}'/></t></td>
                                     </tr>
                                     <tr>
                                         <th>Validade:</th>

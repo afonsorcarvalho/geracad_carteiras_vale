@@ -57,9 +57,9 @@
                                         <td width="50%" class="col-dir">
                                             <p style="text-align: center; font-weight: bold; font-size: 13pt; margin: 0 0 12px 0;">DECLARAÇÃO</p>
                                             <p style="margin: 0 0 10px 0; text-align: justify; line-height: 1.5;">
-                                                Declaramos que o <strong t-esc="(student.student_name or '').upper()"/> participou do treinamento de
+                                                Declaramos que o Sr(a) <strong t-esc="(student.name or '').upper()"/><t t-if="student.matricula">-<strong t-esc="student.matricula"/></t> participou do treinamento de
                                                 <strong t-field="training.name"/> no período
-                                                <span t-field="training.training_date" t-options='{"widget": "date"}'/>,
+                                                <span t-field="training.date_start" t-options='{"widget": "date"}'/><t t-if="training.date_end"> a <span t-field="training.date_end" t-options='{"widget": "date"}'/></t>,
                                                 com carga horária de <strong><t t-esc="int(training.workload_hours)"/> horas</strong>.
                                             </p>
                                             <p style="margin: 12px 0 2px 0;">Coordenador Pedagógico: <span t-field="training.coordinator_name"/></p>
@@ -71,7 +71,7 @@
                                                     </p>
                                                 </t>
                                                 <p style="margin: 6px 0 0 0; font-size: 9pt; text-align: center;">_________________________________________________</p>
-                                                <p style="margin: 2px 0 0 0; font-size: 9pt; text-align: center;"></p>
+                                                <p style="margin: 2px 0 0 0; font-size: 9pt; text-align: center;"><span t-field="training.instructor_name"/></p>
                                             </div>
                                         </td>
                                     </tr>

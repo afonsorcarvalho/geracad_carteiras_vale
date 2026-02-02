@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Action - Lista de Alunos (Carteiras) -->
+    <!-- Action - Lista de Alunos (Carteiras da Vale) -->
     <record id="action_geracad_carteira_aluno" model="ir.actions.act_window">
         <field name="name">Alunos</field>
         <field name="res_model">geracad.carteira.aluno</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -41,7 +41,8 @@
         <field name="arch" type="xml">
             <tree string="Treinamentos" decoration-muted="[('student_count', '=', 0)]">
                 <field name="name"/>
-                <field name="training_date"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
                 <field name="validity_date"/>
                 <field name="coordinator_name"/>
                 <field name="instructor_name"/>
@@ -64,12 +65,16 @@
                                 string="Imprimir Carteiras"
                                 class="oe_stat_button" icon="fa-print"
                                 attrs="{'invisible': [('student_count', '=', 0)]}"/>
+                        <button name="action_print_entrega" type="object"
+                                string="Lista de Entrega"
+                                class="oe_stat_button" icon="fa-list-alt"/>
                     </div>
                     <group>
                         <group string="Treinamento">
                             <field name="name" placeholder="Ex: Reciclagem de Plataforma Elevatória"/>
                             <field name="description" placeholder="Ex: Empregado que executa atividade de..."/>
-                            <field name="training_date"/>
+                            <field name="date_start"/>
+                            <field name="date_end" placeholder="Opcional: deixe vazio se for apenas um dia"/>
                             <field name="validity_date"/>
                             <field name="workload_hours"/>
                             <field name="company_id" groups="base.group_multi_company"/>
@@ -85,8 +90,8 @@
                         <page string="Alunos Matriculados" name="students">
                             <field name="student_ids" nolabel="1" context="{'default_training_id': active_id}">
                                 <tree string="Alunos" editable="bottom" create="1" delete="1">
-                                    <field name="aluno_id" options="{'no_create': True}" placeholder="Selecione o aluno..."/>
-                                    <field name="student_name" placeholder="Preenchido automaticamente (maiúsculas)"/>
+                                    <field name="name" placeholder="Nome do aluno (maiúsculas)"/>
+                                    <field name="matricula" placeholder="Matrícula"/>
                                 </tree>
                             </field>
                         </page>
@@ -96,16 +101,36 @@
         </field>
     </record>
 
-    <!-- Tree View - Alunos (standalone, optional) -->
+    <!-- Tree View - Alunos (Carteira da Vale) -->
     <record id="view_geracad_carteira_aluno_tree" model="ir.ui.view">
         <field name="name">geracad.carteira.aluno.tree</field>
         <field name="model">geracad.carteira.aluno</field>
         <field name="arch" type="xml">
             <tree string="Alunos" editable="bottom">
                 <field name="training_id"/>
-                <field name="aluno_id"/>
-                <field name="student_name"/>
+                <field name="name"/>
+                <field name="matricula"/>
             </tree>
+        </field>
+    </record>
+
+    <!-- Form View - Aluno (Carteira da Vale) -->
+    <record id="view_geracad_carteira_aluno_form" model="ir.ui.view">
+        <field name="name">geracad.carteira.aluno.form</field>
+        <field name="model">geracad.carteira.aluno</field>
+        <field name="arch" type="xml">
+            <form string="Aluno - Carteira da Vale">
+                <sheet>
+                    <group>
+                        <group string="Dados do Aluno">
+                            <field name="training_id"/>
+                            <field name="name" placeholder="Nome (será salvo em maiúsculas)"/>
+                            <field name="matricula" placeholder="Matrícula"/>
+                            <field name="verification_code" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 
