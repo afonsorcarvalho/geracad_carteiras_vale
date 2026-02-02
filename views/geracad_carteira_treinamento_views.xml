@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Action - Lista de Alunos (Carteiras) -->
+    <record id="action_geracad_carteira_aluno" model="ir.actions.act_window">
+        <field name="name">Alunos</field>
+        <field name="res_model">geracad.carteira.aluno</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Nenhum aluno matriculado em treinamentos de carteira.
+            </p>
+            <p>
+                Os alunos são adicionados na aba &quot;Alunos Matriculados&quot; de cada treinamento.
+            </p>
+        </field>
+    </record>
+
     <!-- Action - Lista de Treinamentos -->
     <record id="action_geracad_carteira_treinamento" model="ir.actions.act_window">
         <field name="name">Treinamentos - Carteiras de Vale</field>
@@ -62,7 +78,7 @@
                             <field name="coordinator_name" placeholder="Ex: Mauricio Vasconcelos"/>
                             <field name="instructor_name" placeholder="Ex: Fabio Lima"/>
                             <field name="instructor_signature" widget="image"/>
-                            <field name="coordinator_signature" widget="image"/>
+                            <!-- <field name="coordinator_signature" widget="image"/> -->
                         </group>
                     </group>
                     <notebook>
