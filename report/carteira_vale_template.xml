@@ -15,8 +15,8 @@
                 .carteira-logo { max-height: 50px; max-width: 120px; margin-bottom: 8px; }
             </style>
             <t t-foreach="docs" t-as="training">
-                <t t-foreach="training.get_student_chunks(3)" t-as="page_students">
-                    <div class="page" style="page-break-after: always; font-family: Arial, sans-serif; font-size: 11pt;">
+                <t t-foreach="training.get_student_chunks(4)" t-as="page_students">
+                    <div class="page" t-att-style="'page-break-after: always; font-family: Arial, sans-serif; font-size: 11pt;' if not page_students_last else 'font-family: Arial, sans-serif; font-size: 11pt;'">
                         <t t-foreach="page_students" t-as="student">
                             <div class="carteira-card">
                                 <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse;">

@@ -135,8 +135,8 @@ class GeracadCarteiraTreinamento(models.Model):
             return company.partner_id.l10n_br_cnpj_cpf
         return company.vat or ''
 
-    def get_student_chunks(self, chunk_size=3):
-        """Retorna os alunos agrupados em listas de até chunk_size (ex.: 3 por página)."""
+    def get_student_chunks(self, chunk_size=4):
+        """Retorna os alunos agrupados em listas de até chunk_size (ex.: 4 por página)."""
         self.ensure_one()
         students = self.student_ids
         return [students[i:i + chunk_size] for i in range(0, len(students), chunk_size)]
