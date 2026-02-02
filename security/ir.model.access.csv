@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_geracad_carteira_treinamento_user,geracad.carteira.treinamento.user,model_geracad_carteira_treinamento,geracad_carteiras_vale.group_geracad_carteiras_vale_user,1,1,1,1
+access_geracad_carteira_treinamento_public,geracad.carteira.treinamento.public,model_geracad_carteira_treinamento,base.group_public,1,0,0,0
+access_geracad_carteira_aluno_user,geracad.carteira.aluno.user,model_geracad_carteira_aluno,geracad_carteiras_vale.group_geracad_carteiras_vale_user,1,1,1,1
+access_geracad_carteira_aluno_public,geracad.carteira.aluno.public,model_geracad_carteira_aluno,base.group_public,1,0,0,0

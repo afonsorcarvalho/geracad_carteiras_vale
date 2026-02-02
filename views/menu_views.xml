@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Ícone na raiz do dashboard (como Alunos, Cursos, etc.) -->
+    <record model="ir.ui.menu" id="menu_geracad_carteiras_vale_app">
+        <field name="name">Carteiras da Vale</field>
+        <field name="action" ref="action_geracad_carteira_treinamento"/>
+        <field name="groups_id" eval="[(4, ref('geracad_carteiras_vale.group_geracad_carteiras_vale_user'))]"/>
+        <field name="web_icon">geracad_carteiras_vale,static/description/icon.png</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Menu Carteiras da Vale sob Cursos (submenu) - mesmo grupo -->
+    <record model="ir.ui.menu" id="menu_geracad_carteiras_vale_root">
+        <field name="name">Carteiras da Vale</field>
+        <field name="parent_id" ref="geracad_curso.menu_root"/>
+        <field name="groups_id" eval="[(4, ref('geracad_carteiras_vale.group_geracad_carteiras_vale_user'))]"/>
+        <field name="web_icon">geracad_carteiras_vale,static/description/icon.png</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- Submenu Treinamentos (dentro de Carteiras da Vale em Cursos) -->
+    <record model="ir.ui.menu" id="menu_geracad_carteira_treinamento">
+        <field name="name">Treinamentos</field>
+        <field name="parent_id" ref="menu_geracad_carteiras_vale_root"/>
+        <field name="action" ref="action_geracad_carteira_treinamento"/>
+        <field name="sequence">10</field>
+    </record>
+
+</odoo>

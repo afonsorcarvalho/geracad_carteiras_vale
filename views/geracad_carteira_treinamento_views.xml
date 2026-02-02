@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action - Lista de Treinamentos -->
+    <record id="action_geracad_carteira_treinamento" model="ir.actions.act_window">
+        <field name="name">Treinamentos - Carteiras de Vale</field>
+        <field name="res_model">geracad.carteira.treinamento</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_my': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crie um novo treinamento para gerar carteiras de vale.
+            </p>
+            <p>
+                Preencha os dados do treinamento (nome, descrição, data, coordenador e instrutor),
+                adicione os alunos matriculados e depois imprima as carteiras em PDF.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View - Treinamentos -->
+    <record id="view_geracad_carteira_treinamento_tree" model="ir.ui.view">
+        <field name="name">geracad.carteira.treinamento.tree</field>
+        <field name="model">geracad.carteira.treinamento</field>
+        <field name="arch" type="xml">
+            <tree string="Treinamentos" decoration-muted="[('student_count', '=', 0)]">
+                <field name="name"/>
+                <field name="training_date"/>
+                <field name="validity_date"/>
+                <field name="coordinator_name"/>
+                <field name="instructor_name"/>
+                <field name="workload_hours"/>
+                <field name="student_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View - Treinamento -->
+    <record id="view_geracad_carteira_treinamento_form" model="ir.ui.view">
+        <field name="name">geracad.carteira.treinamento.form</field>
+        <field name="model">geracad.carteira.treinamento</field>
+        <field name="arch" type="xml">
+            <form string="Treinamento - Carteira de Vale">
+                <sheet>
+                    <field name="student_count" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_print_carteiras" type="object"
+                                string="Imprimir Carteiras"
+                                class="oe_stat_button" icon="fa-print"
+                                attrs="{'invisible': [('student_count', '=', 0)]}"/>
+                    </div>
+                    <group>
+                        <group string="Treinamento">
+                            <field name="name" placeholder="Ex: Reciclagem de Plataforma Elevatória"/>
+                            <field name="description" placeholder="Ex: Empregado que executa atividade de..."/>
+                            <field name="training_date"/>
+                            <field name="validity_date"/>
+                            <field name="workload_hours"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Coordenador e Instrutor">
+                            <field name="coordinator_name" placeholder="Ex: Mauricio Vasconcelos"/>
+                            <field name="instructor_name" placeholder="Ex: Fabio Lima"/>
+                            <field name="instructor_signature" widget="image"/>
+                            <field name="coordinator_signature" widget="image"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Alunos Matriculados" name="students">
+                            <field name="student_ids" nolabel="1" context="{'default_training_id': active_id}">
+                                <tree string="Alunos" editable="bottom" create="1" delete="1">
+                                    <field name="aluno_id" options="{'no_create': True}" placeholder="Selecione o aluno..."/>
+                                    <field name="student_name" placeholder="Preenchido automaticamente (maiúsculas)"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View - Alunos (standalone, optional) -->
+    <record id="view_geracad_carteira_aluno_tree" model="ir.ui.view">
+        <field name="name">geracad.carteira.aluno.tree</field>
+        <field name="model">geracad.carteira.aluno</field>
+        <field name="arch" type="xml">
+            <tree string="Alunos" editable="bottom">
+                <field name="training_id"/>
+                <field name="aluno_id"/>
+                <field name="student_name"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="carteira_verification_valid" name="Verificação de Carteira - Válida">
+        <t t-call="website.layout">
+            <div class="container mt-5 mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-success text-white text-center">
+                                <h3 class="mb-0">
+                                    <i class="fa fa-check-circle"/> Carteira Autenticada
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-success" role="alert">
+                                    <strong>Esta carteira é autêntica e válida.</strong>
+                                </div>
+                                
+                                <h5 class="mb-3">Informações da Carteira</h5>
+                                
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="40%">Aluno:</th>
+                                        <td><strong t-esc="carteira.student_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Treinamento:</th>
+                                        <td><span t-field="training.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Data do Treinamento:</th>
+                                        <td><span t-field="training.training_date" t-options='{"widget": "date"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Validade:</th>
+                                        <td><span t-field="training.validity_date" t-options='{"widget": "date"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Carga Horária:</th>
+                                        <td><t t-esc="int(training.workload_hours)"/> horas</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Coordenador:</th>
+                                        <td><span t-field="training.coordinator_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Instrutor:</th>
+                                        <td><span t-field="training.instructor_name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Empresa:</th>
+                                        <td><span t-field="company.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Código de Verificação:</th>
+                                        <td><code t-esc="code"/></td>
+                                    </tr>
+                                </table>
+                                
+                                <div class="mt-4 text-center">
+                                    <p class="text-muted small">
+                                        Esta página confirma a autenticidade da carteira de treinamento.
+                                        <br/>
+                                        <span t-field="company.name"/>
+                                        <t t-if="company.website">
+                                            - <a t-attf-href="#{company.website}" target="_blank"><span t-field="company.website"/></a>
+                                        </t>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="carteira_verification_invalid" name="Verificação de Carteira - Inválida">
+        <t t-call="website.layout">
+            <div class="container mt-5 mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-danger text-white text-center">
+                                <h3 class="mb-0">
+                                    <i class="fa fa-times-circle"/> Carteira Não Encontrada
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>O código de verificação informado não foi encontrado no sistema.</strong>
+                                    <br/>
+                                    <small class="mt-2 d-block">Código informado: <code t-esc="code"/></small>
+                                </div>
+                                
+                                <p class="text-muted">
+                                    Possíveis motivos:
+                                </p>
+                                <ul>
+                                    <li>O código de verificação está incorreto</li>
+                                    <li>A carteira não existe ou foi removida do sistema</li>
+                                    <li>O código foi digitado incorretamente</li>
+                                </ul>
+                                
+                                <div class="mt-4 text-center">
+                                    <p class="text-muted small">
+                                        Verifique o código e tente novamente. Se o problema persistir, entre em contato com a empresa emissora.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

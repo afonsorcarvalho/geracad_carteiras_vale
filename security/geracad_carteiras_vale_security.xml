@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="module_category_geracad_carteiras_vale" model="ir.module.category">
+            <field name="name">Carteiras da Vale</field>
+        </record>
+        <record id="group_geracad_carteiras_vale_user" model="res.groups">
+            <field name="name">Usuário</field>
+            <field name="category_id" ref="module_category_geracad_carteiras_vale"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Acesso ao módulo Carteiras da Vale (treinamentos e geração de carteiras).</field>
+        </record>
+    </data>
+</odoo>
