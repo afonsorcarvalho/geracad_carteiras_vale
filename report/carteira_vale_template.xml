@@ -34,7 +34,7 @@
                                                 <span t-field="training.description"/>
                                             </p>
                                             <p style="margin: 0 0 2px 0;"><span t-field="training.company_id.name"/></p>
-                                            <p style="margin: 0 0 2px 0;">CNPJ: <span t-field="training.company_id.vat"/></p>
+                                            <p style="margin: 0 0 2px 0;">CNPJ: <span t-esc="training.get_company_cnpj()"/></p>
                                             <p style="margin: 0 0 2px 0;">
                                                 <t t-if="training.company_id.partner_id">
                                                     <span t-field="training.company_id.partner_id.city"/>

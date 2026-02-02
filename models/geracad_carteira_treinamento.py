@@ -109,6 +109,19 @@ class GeracadCarteiraTreinamento(models.Model):
             return 'data:image/png;base64,' + base64.b64encode(value).decode('utf-8')
         return 'data:image/png;base64,' + (value if isinstance(value, str) else '')
 
+    def get_company_cnpj(self):
+        """Retorna o CNPJ da empresa: l10n_br_cnpj_cpf (partner ou company) ou vat."""
+        self.ensure_one()
+        company = self.company_id
+        if not company:
+            return ''
+        # l10n_br: CNPJ no partner ou na company
+        if hasattr(company, 'l10n_br_cnpj_cpf') and company.l10n_br_cnpj_cpf:
+            return company.l10n_br_cnpj_cpf
+        if company.partner_id and hasattr(company.partner_id, 'l10n_br_cnpj_cpf') and company.partner_id.l10n_br_cnpj_cpf:
+            return company.partner_id.l10n_br_cnpj_cpf
+        return company.vat or ''
+
     def get_student_chunks(self, chunk_size=3):
         """Retorna os alunos agrupados em listas de até chunk_size (ex.: 3 por página)."""
         self.ensure_one()
