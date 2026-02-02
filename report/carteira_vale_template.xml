@@ -6,72 +6,73 @@
             <style>
                 .carteira-card {
                     border: 1px dashed #333;
-                    margin: 12px 0;
-                    padding: 10px;
+                    margin: 4px 0;
+                    padding: 4px;
                     page-break-inside: avoid;
+                    font-size: 9pt;
                 }
-                .carteira-card .col-esq { vertical-align: top; padding-right: 16px; border-right: 1px solid #ccc; }
-                .carteira-card .col-dir { vertical-align: top; padding-left: 16px; }
-                .carteira-logo { max-height: 50px; max-width: 120px; margin-bottom: 8px; }
+                .carteira-card .col-esq { vertical-align: top; padding-right: 8px; border-right: 1px solid #ccc; }
+                .carteira-card .col-dir { vertical-align: top; padding-left: 8px; }
+                .carteira-logo { max-height: 32px; max-width: 90px; margin-bottom: 2px; }
             </style>
             <t t-foreach="docs" t-as="training">
                 <t t-foreach="training.get_student_chunks(4)" t-as="page_students">
                     <div class="page" t-att-style="'page-break-after: always; font-family: Arial, sans-serif; font-size: 11pt;' if not page_students_last else 'font-family: Arial, sans-serif; font-size: 11pt;'">
                         <t t-foreach="page_students" t-as="student">
                             <div class="carteira-card">
-                                <table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse;">
+                                <table width="100%" cellpadding="3" cellspacing="0" style="border-collapse: collapse;">
                                     <tr>
                                         <td width="50%" class="col-esq">
                                             <t t-if="training.company_id.logo">
-                                                <p style="margin: 0 0 8px 0;">
+                                                <p style="margin: 0 0 2px 0;">
                                                     <img t-att-src="image_data_uri(training.company_id.logo)" alt="Logo" class="carteira-logo"/>
                                                 </p>
                                             </t>
-                                            <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 12pt;">
+                                            <p style="margin: 0 0 2px 0; font-weight: bold; font-size: 9pt;">
                                                 Treinamento: <span t-field="training.name"/>
                                             </p>
-                                            <p style="margin: 0 0 10px 0; font-size: 10pt; line-height: 1.3;">
+                                            <p style="margin: 0 0 4px 0; font-size: 8pt; line-height: 1.2;">
                                                 <span t-field="training.description"/>
                                             </p>
-                                            <p style="margin: 0 0 2px 0;"><span t-field="training.company_id.name"/></p>
-                                            <p style="margin: 0 0 2px 0;">CNPJ: <span t-esc="training.get_company_cnpj()"/></p>
-                                            <p style="margin: 0 0 2px 0;">
+                                            <p style="margin: 0 0 1px 0; font-size: 8pt;"><span t-field="training.company_id.name"/></p>
+                                            <p style="margin: 0 0 1px 0; font-size: 8pt;">CNPJ: <span t-esc="training.get_company_cnpj()"/></p>
+                                            <p style="margin: 0 0 1px 0; font-size: 8pt;">
                                                 <t t-if="training.company_id.partner_id">
                                                     <span t-field="training.company_id.partner_id.city"/>
                                                     <t t-if="training.company_id.partner_id.state_id">/<span t-field="training.company_id.partner_id.state_id.code"/></t>
                                                 </t>
                                             </p>
-                                            <p style="margin: 8px 0 0 0;">Validade: <span t-field="training.validity_date" t-options='{"widget": "date"}'/></p>
-                                            <div style="position: relative; min-height: 60px;">
-                                                <p style="margin-top: 8px; font-size: 9pt; color: #333;">
+                                            <p style="margin: 2px 0 0 0; font-size: 8pt;">Validade: <span t-field="training.validity_date" t-options='{"widget": "date"}'/></p>
+                                            <div style="position: relative; min-height: 36px;">
+                                                <p style="margin-top: 2px; font-size: 7pt; color: #333;">
                                                     <t t-if="training.company_id.website"><span t-field="training.company_id.website"/></t>
                                                 </p>
                                                 <t t-if="student.get_qr_code_image()">
-                                                    <div style="position: absolute; right: -12px; bottom: 35px; text-align: center;">
-                                                        <img t-att-src="student.get_qr_code_image()" alt="QR Code" style="max-width: 75px; max-height: 75px;"/>
-                                                        <p style="margin: 0; font-size: 6pt; color: #666;">Autenticidade</p>
+                                                    <div style="position: absolute; right: -6px; bottom: 18px; text-align: center;">
+                                                        <img t-att-src="student.get_qr_code_image()" alt="QR Code" style="max-width: 48px; max-height: 48px;"/>
+                                                        <p style="margin: 0; font-size: 5pt; color: #666;">Autenticidade</p>
                                                     </div>
                                                 </t>
                                             </div>
                                         </td>
                                         <td width="50%" class="col-dir">
-                                            <p style="text-align: center; font-weight: bold; font-size: 13pt; margin: 0 0 12px 0;">DECLARAÇÃO</p>
-                                            <p style="margin: 0 0 10px 0; text-align: justify; line-height: 1.5;">
+                                            <p style="text-align: center; font-weight: bold; font-size: 10pt; margin: 0 0 4px 0;">DECLARAÇÃO</p>
+                                            <p style="margin: 0 0 4px 0; text-align: justify; line-height: 1.3; font-size: 8pt;">
                                                 Declaramos que o Sr(a) <strong t-esc="(student.name or '').upper()"/><t t-if="student.matricula">-<strong t-esc="student.matricula"/></t> participou do treinamento de
                                                 <strong t-field="training.name"/> no período
                                                 <span t-field="training.date_start" t-options='{"widget": "date"}'/><t t-if="training.date_end"> a <span t-field="training.date_end" t-options='{"widget": "date"}'/></t>,
                                                 com carga horária de <strong><t t-esc="int(training.workload_hours)"/> horas</strong>.
                                             </p>
-                                            <p style="margin: 12px 0 2px 0;">Coordenador Pedagógico: <span t-field="training.coordinator_name"/></p>
-                                            <p style="margin: 0 0 6px 0;">Instrutor: <span t-field="training.instructor_name"/></p>
-                                            <div style="text-align: center; margin-top: 12px;">
+                                            <p style="margin: 4px 0 1px 0; font-size: 8pt;">Coordenador Pedagógico: <span t-field="training.coordinator_name"/></p>
+                                            <p style="margin: 0 0 2px 0; font-size: 8pt;">Instrutor: <span t-field="training.instructor_name"/></p>
+                                            <div style="text-align: center; margin-top: 4px;">
                                                 <t t-if="training.instructor_signature">
-                                                    <p style="margin: 8px 0 0 0; text-align: center;">
-                                                        <img t-att-src="image_data_uri(training.instructor_signature)" alt="Assinatura Instrutor" style="max-height: 45px;"/>
+                                                    <p style="margin: 2px 0 0 0; text-align: center;">
+                                                        <img t-att-src="image_data_uri(training.instructor_signature)" alt="Assinatura Instrutor" style="max-height: 28px;"/>
                                                     </p>
                                                 </t>
-                                                <p style="margin: 6px 0 0 0; font-size: 9pt; text-align: center;">_________________________________________________</p>
-                                                <p style="margin: 2px 0 0 0; font-size: 9pt; text-align: center;"><span t-field="training.instructor_name"/></p>
+                                                <p style="margin: 2px 0 0 0; font-size: 7pt; text-align: center;">_________________________________________________</p>
+                                                <p style="margin: 0; font-size: 7pt; text-align: center;"><span t-field="training.instructor_name"/></p>
                                             </div>
                                         </td>
                                     </tr>
