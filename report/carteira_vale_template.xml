@@ -64,13 +64,15 @@
                                             </p>
                                             <p style="margin: 12px 0 2px 0;">Coordenador Pedagógico: <span t-field="training.coordinator_name"/></p>
                                             <p style="margin: 0 0 6px 0;">Instrutor: <span t-field="training.instructor_name"/></p>
-                                            <t t-if="training.instructor_signature">
-                                                <p style="margin: 8px 0 0 0;">
-                                                    <img t-att-src="image_data_uri(training.instructor_signature)" alt="Assinatura Instrutor" style="max-height: 45px;"/>
-                                                </p>
-                                            </t>
-                                            <p style="margin: 6px 0 0 0; font-size: 9pt;">_________________________________________________</p>
-                                            <p style="margin: 2px 0 0 0; font-size: 9pt;"><span t-field="training.instructor_name"/></p>
+                                            <div style="text-align: center; margin-top: 12px;">
+                                                <t t-if="training.instructor_signature">
+                                                    <p style="margin: 8px 0 0 0; text-align: center;">
+                                                        <img t-att-src="image_data_uri(training.instructor_signature)" alt="Assinatura Instrutor" style="max-height: 45px;"/>
+                                                    </p>
+                                                </t>
+                                                <p style="margin: 6px 0 0 0; font-size: 9pt; text-align: center;">_________________________________________________</p>
+                                                <p style="margin: 2px 0 0 0; font-size: 9pt; text-align: center;">
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>
